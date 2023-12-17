@@ -11,6 +11,7 @@ import {
   faCircleChevronRight,
   faCircleChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import PaginationWrapper from "../../pages/Home/PaginationWrapper";
 
 function OrderHistory() {
   const { orders, reloadOrders } = useContext(OrdersContext);
@@ -18,13 +19,12 @@ function OrderHistory() {
   const handleClearHistory = async () => {
     try {
       const response = await clearAllOrderHistory();
-      console.log('History cleared:', response);
-      reloadOrders()
+      console.log("History cleared:", response);
+      reloadOrders();
     } catch (error) {
-      console.error('Failed to clear history:', error);
+      console.error("Failed to clear history:", error);
     }
   };
-  
 
   const columns = React.useMemo(
     () => [
@@ -58,7 +58,7 @@ function OrderHistory() {
         accessor: (row) => `$${row.totalCost}`,
       },
     ],
-    []
+    [],
   );
 
   const {
@@ -75,9 +75,9 @@ function OrderHistory() {
     setPageSize,
     state: { pageIndex, pageSize },
   } = useTable(
-    { columns, data: orders, initialState: { pageIndex: 0, pageSize: 10 } },
+    { columns, data: orders, initialState: { pageIndex: 0, pageSize: 30 } },
     useSortBy,
-    usePagination
+    usePagination,
   );
 
   return (
@@ -148,47 +148,48 @@ function OrderHistory() {
           })}
         </tbody>
       </table>
+      <PaginationWrapper>
+        <div className="flex gap-4 justify-between p-2 mt-6">
+          <div className="flex gap-4 items-center">
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {
+                <FontAwesomeIcon
+                  icon={faCircleChevronLeft}
+                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                />
+              }
+            </button>{" "}
+            <span className="text-sm text-zinc-700">
+              Page{" "}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>{" "}
+            </span>
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {
+                <FontAwesomeIcon
+                  icon={faCircleChevronRight}
+                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                />
+              }
+            </button>{" "}
+          </div>
 
-      <div className="flex gap-4 justify-between p-2 mt-6">
-        <div className="flex gap-4 items-center">
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {
-              <FontAwesomeIcon
-                icon={faCircleChevronLeft}
-                className="text-xl text-zinc-400 hover:text-zinc-400/80"
-              />
-            }
-          </button>{" "}
-          <span className="text-sm text-zinc-700">
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </span>
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {
-              <FontAwesomeIcon
-                icon={faCircleChevronRight}
-                className="text-xl text-zinc-400 hover:text-zinc-400/80"
-              />
-            }
-          </button>{" "}
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+            className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+          >
+            {[10, 20, 30, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
         </div>
-
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-          className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
-        >
-          {[10, 20, 30, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
+      </PaginationWrapper>
     </div>
   );
 }

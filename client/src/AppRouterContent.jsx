@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { OrdersContext } from "./contexts/orders.context";
 import { AuthContext } from "./contexts/auth.context";
-import Home from "./pages/Home.jsx";
+import Home from "./pages/Home/Home.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import OrderedDeliveredPopup from "./containers/Inventory/modals/OrderedDeliveredPopup.jsx";
 import { Toaster } from "react-hot-toast";

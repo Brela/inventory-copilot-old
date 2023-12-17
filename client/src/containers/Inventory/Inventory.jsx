@@ -33,6 +33,7 @@ import SelectedRowsModal from "./modals/SelectedRows";
 import { updateInventoryItem } from "../../services/inventoryAPIcalls";
 import { EditableCell } from "./EditableCell";
 import DemoControls from "../DemoControls";
+import PaginationWrapper from "../../pages/Home/PaginationWrapper";
 
 export default function Inventory() {
   const {
@@ -216,7 +217,7 @@ export default function Inventory() {
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 10 },
+      initialState: { pageIndex: 0, pageSize: 30 },
       disableSortBy,
     },
     useSortBy,
@@ -344,49 +345,51 @@ export default function Inventory() {
               </tr>
             </tfoot>
           </table>
-          <div className="flex gap-4 justify-between p-2 mt-2">
-            <div className="flex gap-4 items-center">
-              <button
-                onClick={() => previousPage()}
-                disabled={!canPreviousPage}
-              >
-                {
-                  <FontAwesomeIcon
-                    icon={faCircleChevronLeft}
-                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
-                  />
-                }
-              </button>{" "}
-              <span className="text-sm text-zinc-700">
-                Page{" "}
-                <strong>
-                  {pageIndex + 1} of {pageOptions.length}
-                </strong>{" "}
-              </span>
-              <button onClick={() => nextPage()} disabled={!canNextPage}>
-                {
-                  <FontAwesomeIcon
-                    icon={faCircleChevronRight}
-                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
-                  />
-                }
-              </button>{" "}
-            </div>
+          <PaginationWrapper>
+            <div className="flex gap-4 justify-between p-2 mt-2">
+              <div className="flex gap-4 items-center">
+                <button
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                >
+                  {
+                    <FontAwesomeIcon
+                      icon={faCircleChevronLeft}
+                      className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                    />
+                  }
+                </button>{" "}
+                <span className="text-sm text-zinc-700">
+                  Page{" "}
+                  <strong>
+                    {pageIndex + 1} of {pageOptions.length}
+                  </strong>{" "}
+                </span>
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                  {
+                    <FontAwesomeIcon
+                      icon={faCircleChevronRight}
+                      className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                    />
+                  }
+                </button>{" "}
+              </div>
 
-            <select
-              value={pageSize}
-              onChange={(e) => {
-                setPageSize(Number(e.target.value));
-              }}
-              className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
-            >
-              {[10, 20, 30, 50].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
-          </div>
+              <select
+                value={pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                }}
+                className="rounded-lg bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+              >
+                {[10, 20, 30, 50].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </PaginationWrapper>
         </>
       )}
 

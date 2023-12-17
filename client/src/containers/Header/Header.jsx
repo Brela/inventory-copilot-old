@@ -15,7 +15,7 @@ import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";
 import SettingsContent from "./SettingsContent";
 import HeaderModal from "./HeaderModal";
-import NavigationBar from "../NavigationBar";
+import NavigationBar from "../../components/NavigationBar";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -79,7 +79,7 @@ const Header = () => {
     <div className="flex justify-between items-center pt-4  ">
       <a
         href="/"
-        className="text-2xl font-bold text-gray-600 tracking-tighter hover:scale-105 transition-all ease-linear duration-300"
+        className="text-xl font-bold text-gray-50 tracking-wide hover:scale-105 transition-all ease-linear duration-300"
       >
         Inventory Copilot
       </a>

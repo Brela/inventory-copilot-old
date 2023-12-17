@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import EditPopup from "./EditPopup";
 import { useTable, useSortBy, usePagination } from "react-table";
+import PaginationWrapper from "../../pages/Home/PaginationWrapper";
 
 function ActiveOrders() {
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
@@ -132,7 +133,7 @@ function ActiveOrders() {
     {
       columns,
       data: activeOrders,
-      initialState: { pageIndex: 0, pageSize: 10 },
+      initialState: { pageIndex: 0, pageSize: 30 },
     },
     useSortBy,
     usePagination,
@@ -200,8 +201,8 @@ function ActiveOrders() {
             })}
           </tbody>
         </table>
-        <section className="absolute bottom-0 w-[60%]">
-          <div className="flex gap-4 justify-between p-2 mt-6">
+        <PaginationWrapper>
+          <div className="flex gap-4 justify-between p-2">
             <div className="flex gap-4 items-center">
               <button
                 onClick={() => previousPage()}
@@ -244,7 +245,7 @@ function ActiveOrders() {
               ))}
             </select>
           </div>
-        </section>
+        </PaginationWrapper>
       </div>
 
       {orderForPopup && (
