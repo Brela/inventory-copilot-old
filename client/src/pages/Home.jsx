@@ -1,9 +1,7 @@
 import React, { useState, useRef } from "react";
-import InventoryContent from "../components/Inventory/Inventory.jsx";
-import Header from "../components/Header/Header.jsx";
-import Footer from "../components/Footer/Footer.jsx";
-import Stats from "../components/Inventory/Stats.jsx";
-import NavigationBar from "../components/NavigationBar.jsx";
+import Header from "../containers/Header/Header.jsx";
+import Footer from "../containers/Footer/Footer.jsx";
+import NavigationBar from "../containers/NavigationBar.jsx";
 
 function InventoryPage() {
   const inventoryListScrollRef = useRef(null);

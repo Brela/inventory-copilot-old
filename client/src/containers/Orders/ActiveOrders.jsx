@@ -112,7 +112,7 @@ function ActiveOrders() {
         ),
       },
     ],
-    []
+    [],
   );
 
   const {
@@ -135,12 +135,12 @@ function ActiveOrders() {
       initialState: { pageIndex: 0, pageSize: 10 },
     },
     useSortBy,
-    usePagination
+    usePagination,
   );
 
   return (
     <>
-      <div className="px-4">
+      <div className="px-4 ">
         <table
           {...getTableProps()}
           className="table-auto w-full text-black/80 "
@@ -200,46 +200,51 @@ function ActiveOrders() {
             })}
           </tbody>
         </table>
-        <div className="flex gap-4 justify-between p-2 mt-6">
-          <div className="flex gap-4 items-center">
-            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-              {
-                <FontAwesomeIcon
-                  icon={faCircleChevronLeft}
-                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
-                />
-              }
-            </button>{" "}
-            <span className="text-sm text-zinc-700">
-              Page{" "}
-              <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>{" "}
-            </span>
-            <button onClick={() => nextPage()} disabled={!canNextPage}>
-              {
-                <FontAwesomeIcon
-                  icon={faCircleChevronRight}
-                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
-                />
-              }
-            </button>{" "}
-          </div>
+        <section className="absolute bottom-0 w-[60%]">
+          <div className="flex gap-4 justify-between p-2 mt-6">
+            <div className="flex gap-4 items-center">
+              <button
+                onClick={() => previousPage()}
+                disabled={!canPreviousPage}
+              >
+                {
+                  <FontAwesomeIcon
+                    icon={faCircleChevronLeft}
+                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                  />
+                }
+              </button>{" "}
+              <span className="text-sm text-zinc-700">
+                Page{" "}
+                <strong>
+                  {pageIndex + 1} of {pageOptions.length}
+                </strong>{" "}
+              </span>
+              <button onClick={() => nextPage()} disabled={!canNextPage}>
+                {
+                  <FontAwesomeIcon
+                    icon={faCircleChevronRight}
+                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                  />
+                }
+              </button>{" "}
+            </div>
 
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-            className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
-          >
-            {[10, 20, 30, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+              }}
+              className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+            >
+              {[10, 20, 30, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+          </div>
+        </section>
       </div>
 
       {orderForPopup && (

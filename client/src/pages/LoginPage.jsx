@@ -1,10 +1,8 @@
-import React from 'react';
-import LoginLanding from '../components/Login/LoginLanding.jsx';
+import React from "react";
+import LoginLanding from "../containers/Login/LoginLanding.jsx";
 
 function LoginPage() {
-  return (
-      <LoginLanding />
-  );
+  return <LoginLanding />;
 }
 
 export default LoginPage;
