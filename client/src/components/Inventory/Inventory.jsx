@@ -20,6 +20,7 @@ import {
   faSort,
   faSortDown,
   faSortUp,
+  faTable,
 } from "@fortawesome/free-solid-svg-icons";
 import Order from "./modals/OrderNow";
 import { createOrderItem } from "../../services/ordersAPIcalls";
@@ -259,187 +260,132 @@ export default function Inventory() {
             onClose={() => setIsModalOpen(false)}
             selectedRows={selectedRowsData}
           />
-          <div className="bg-zinc-100 rounded-2xl p-2 md:p-4 overflow-x-auto">
-            <div className="flex mb-4 gap-x-4 sm:gap-x-1 font-semibold text-zinc-800 md:px-2">
+
+          <div className="flex justify-between items-center">
+            <div className="">
+              {selectedFlatRows.length > 0 && (
+                <button
+                  className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2 text-zinc-700 font-semibold text-sm"
+                  onClick={openModalWithSelectedRows}
+                >
+                  <FontAwesomeIcon
+                    icon={faGear}
+                    className=" text-base text-zinc-400 "
+                  />{" "}
+                  <span className="hidden sm:flex">Bulk Actions</span>
+                </button>
+              )}
+            </div>
+            <AddProductButton />
+          </div>
+          <table
+            {...getTableProps()}
+            id="inventory"
+            className="w-full table-auto text-black/80"
+          >
+            <thead className="border-b border-zinc-200 h-14 text-sm ">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      className="px-1 font-semibold"
+                    >
+                      {column.render("Header")}
+                      <span className="">
+                        {column.id !== "selection" && column.id !== "order" ? (
+                          column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <FontAwesomeIcon
+                                icon={faSortDown}
+                                className="text-zinc-400 ml-2"
+                              />
+                            ) : (
+                              <FontAwesomeIcon
+                                icon={faSortUp}
+                                className="text-zinc-400 ml-2"
+                              />
+                            )
+                          ) : (
+                            <FontAwesomeIcon
+                              icon={faSort}
+                              className="text-zinc-400 ml-2"
+                            />
+                          )
+                        ) : null}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()} className="tracking-wide">
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    {...row.getRowProps()}
+                    className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
+                  >
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} className="px-5">
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+            <tfoot className="">
+              <tr className="">
+                <td className="" colSpan={columns.length + 1}>
+                  <DemoControls />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+          <div className="flex gap-4 justify-between p-2 mt-2">
+            <div className="flex gap-4 items-center">
               <button
-                className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
-                  activeTab === "inventory"
-                    ? "bg-slate-300/75 rounded-xl "
-                    : "text-zinc-700"
-                }`}
-                onClick={() => setActiveTab("inventory")}
+                onClick={() => previousPage()}
+                disabled={!canPreviousPage}
               >
-                <FontAwesomeIcon
-                  icon={faBox}
-                  className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600"
-                />{" "}
-                Inventory
-              </button>
-              <button
-                className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
-                  activeTab === "Active Orders"
-                    ? "bg-slate-300/75 rounded-xl "
-                    : "text-zinc-700"
-                }`}
-                onClick={() => setActiveTab("Active Orders")}
-              >
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600"
-                />{" "}
-                Active Orders
-              </button>
-              <button
-                className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
-                  activeTab === "Order History"
-                    ? "bg-slate-300/75 rounded-xl "
-                    : "text-zinc-700"
-                }`}
-                onClick={() => setActiveTab("Order History")}
-              >
-                <FontAwesomeIcon
-                  icon={faArchive}
-                  className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600"
-                />{" "}
-                Order History
-              </button>
+                {
+                  <FontAwesomeIcon
+                    icon={faCircleChevronLeft}
+                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                  />
+                }
+              </button>{" "}
+              <span className="text-sm text-zinc-700">
+                Page{" "}
+                <strong>
+                  {pageIndex + 1} of {pageOptions.length}
+                </strong>{" "}
+              </span>
+              <button onClick={() => nextPage()} disabled={!canNextPage}>
+                {
+                  <FontAwesomeIcon
+                    icon={faCircleChevronRight}
+                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                  />
+                }
+              </button>{" "}
             </div>
 
-            {activeTab === "inventory" && (
-              <>
-                <div className="flex justify-between items-center">
-                  <div className="">
-                    {selectedFlatRows.length > 0 && (
-                      <button
-                        className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2 text-zinc-700 font-semibold text-sm"
-                        onClick={openModalWithSelectedRows}
-                      >
-                        <FontAwesomeIcon
-                          icon={faGear}
-                          className=" text-base text-zinc-400 "
-                        />{" "}
-                        <span className="hidden sm:flex">Bulk Actions</span>
-                      </button>
-                    )}
-                  </div>
-                  <AddProductButton />
-                </div>
-                <table
-                  {...getTableProps()}
-                  id="inventory"
-                  className="w-full table-auto text-black/80"
-                >
-                  <thead className="border-b border-zinc-200 h-14 text-sm ">
-                    {headerGroups.map((headerGroup) => (
-                      <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                          <th
-                            {...column.getHeaderProps(
-                              column.getSortByToggleProps(),
-                            )}
-                            className="px-1 font-semibold"
-                          >
-                            {column.render("Header")}
-                            <span className="">
-                              {column.id !== "selection" &&
-                              column.id !== "order" ? (
-                                column.isSorted ? (
-                                  column.isSortedDesc ? (
-                                    <FontAwesomeIcon
-                                      icon={faSortDown}
-                                      className="text-zinc-400 ml-2"
-                                    />
-                                  ) : (
-                                    <FontAwesomeIcon
-                                      icon={faSortUp}
-                                      className="text-zinc-400 ml-2"
-                                    />
-                                  )
-                                ) : (
-                                  <FontAwesomeIcon
-                                    icon={faSort}
-                                    className="text-zinc-400 ml-2"
-                                  />
-                                )
-                              ) : null}
-                            </span>
-                          </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody {...getTableBodyProps()} className="tracking-wide">
-                    {page.map((row) => {
-                      prepareRow(row);
-                      return (
-                        <tr
-                          {...row.getRowProps()}
-                          className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
-                        >
-                          {row.cells.map((cell) => (
-                            <td {...cell.getCellProps()} className="px-5">
-                              {cell.render("Cell")}
-                            </td>
-                          ))}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                  <tfoot className="">
-                    <tr className="">
-                      <td className="" colSpan={columns.length + 1}>
-                        <DemoControls />
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
-                <div className="flex gap-4 justify-between p-2 mt-2">
-                  <div className="flex gap-4 items-center">
-                    <button
-                      onClick={() => previousPage()}
-                      disabled={!canPreviousPage}
-                    >
-                      {
-                        <FontAwesomeIcon
-                          icon={faCircleChevronLeft}
-                          className="text-xl text-zinc-400 hover:text-zinc-400/80"
-                        />
-                      }
-                    </button>{" "}
-                    <span className="text-sm text-zinc-700">
-                      Page{" "}
-                      <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                      </strong>{" "}
-                    </span>
-                    <button onClick={() => nextPage()} disabled={!canNextPage}>
-                      {
-                        <FontAwesomeIcon
-                          icon={faCircleChevronRight}
-                          className="text-xl text-zinc-400 hover:text-zinc-400/80"
-                        />
-                      }
-                    </button>{" "}
-                  </div>
-
-                  <select
-                    value={pageSize}
-                    onChange={(e) => {
-                      setPageSize(Number(e.target.value));
-                    }}
-                    className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
-                  >
-                    {[10, 20, 30, 50].map((pageSize) => (
-                      <option key={pageSize} value={pageSize}>
-                        Show {pageSize}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </>
-            )}
-            {activeTab === "Active Orders" && <ActiveOrders />}
-            {activeTab === "Order History" && <OrderHistory />}
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+              }}
+              className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+            >
+              {[10, 20, 30, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
           </div>
         </>
       )}

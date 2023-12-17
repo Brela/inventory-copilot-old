@@ -15,6 +15,7 @@ import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";
 import SettingsContent from "./SettingsContent";
 import HeaderModal from "./HeaderModal";
+import NavigationBar from "../NavigationBar";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -82,6 +83,7 @@ const Header = () => {
       >
         Inventory Copilot
       </a>
+
       <nav className="flex items-center gap-4 lg:gap-8">
         <div className="relative group inline-block" ref={dropdownRef}>
           <button

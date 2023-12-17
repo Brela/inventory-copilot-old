@@ -9,10 +9,10 @@ generator client {
 }
 
 model Product {
-  id             Int     @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   userId         String?
-  user           User?   @relation(fields: [userId], references: [id])
-  sku            String  @unique // SKU field marked as unique
+  user           User?     @relation(fields: [userId], references: [id])
+  sku            String    @unique // SKU field marked as unique
   brand          String
   productName    String
   description    String
@@ -22,13 +22,13 @@ model Product {
   shipper        String
   unitPrice      Float?
   itemUsageSpeed String?
-  deletedAt       DateTime?
+  deletedAt      DateTime?
   orders         Order[] // Relation to Order model
 }
 
 model Order {
   id               Int       @id @default(autoincrement())
-  SKU              String    // Field to connect with Product's SKU
+  SKU              String // Field to connect with Product's SKU
   product          Product   @relation(fields: [SKU], references: [sku]) // Relation using SKU
   orderedDate      DateTime  @default(now())
   schedArrivalDate DateTime?
@@ -46,17 +46,24 @@ model User {
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  tokens Token[]
-   products  Product[]
+  tokens    Token[]
+  products  Product[]
 }
 
 model Token {
-  id            Int      @id @default(autoincrement())
-  token         String
-  type          String   // "ACCESS" or "REFRESH"
-  userId        String
-  user          User     @relation(fields: [userId], references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  token     String
+  type      String // "ACCESS" or "REFRESH"
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
+// since this db is shared with 'orderly', we need to specify the schema name
+
+// model NewModel {
+//   // fields...
+
+//   @@schema("new_schema_name")
+// }
