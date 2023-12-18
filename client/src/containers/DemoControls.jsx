@@ -70,11 +70,13 @@ export default function DemoControls() {
   };
 
   return (
-    <div className="flex lg:justify-center items-center w-auto bg-zinc-200/40 mt-4 p-2 rounded-2xl ">
+    <div className="flex lg:justify-center items-center w-auto bg-white/50 border-2 border-orange-400/50 mt-4 p-2 rounded-2xl ">
       <div className="flex gap-1 items-center px-4 p-2 ">
-        <h5 className="font-bold text-base text-zinc-700 flex items-center gap-2">
-          Demo Controls
-        </h5>
+        <div className="flex items-center gap-2">
+          <span className="text-md text-slate-700">
+            Automate Stock Usage and Order Deliveries here:
+          </span>
+        </div>
         <div className="flex items-center hover:cursor-pointer">
           <FontAwesomeIcon
             icon={faQuestionCircle}
@@ -89,8 +91,8 @@ export default function DemoControls() {
                 hits the "Target", you should see an order created for that
                 product. You can turn deliveries on (this delivers orders at
                 random times between 2 and 20 seconds) or manually deliver each
-                order with the edit icon. Click reset to get the original stock
-                numbers.
+                order with the edit icon in the 'Active Orders' tab. Click the
+                reset icon to reset with the original stock numbers.
               </p>
             </div>
           </Tooltip>
@@ -98,7 +100,7 @@ export default function DemoControls() {
       </div>
 
       <div className="flex gap-2 items-center">
-        <p className="text-base font-semibold text-zinc-700">Use Inventory:</p>
+        <p className="text-base font-semibold text-zinc-700">Use Stock:</p>
         <button
           className={`px-1 w-auto h-7.5 ${isPlaying ? "" : ""}`}
           onClick={togglePlayStop}

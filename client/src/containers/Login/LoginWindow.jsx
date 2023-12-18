@@ -3,78 +3,80 @@ import { AuthContext } from "../../contexts/auth.context";
 import { createUser, loginUser } from "../../services/userAPIcalls";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faSignIn, faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { toast } from 'react-hot-toast';
+import {
+  faCheckCircle,
+  faSignIn,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-hot-toast";
 import { InventoryContext } from "../../contexts/inventory.context";
 
-
 export default function () {
-    const { setIsLoggedIn } = useContext(AuthContext);
-    const navigate = useNavigate();
-    const [login, setLogin] = useState(true);
-    const [loading, setLoading] = useState(false);
-    const [prompt, setPrompt] = useState(false);
-    const [userAddedPrompt, setUserAddedPrompt] = useState("");
-    const [userLoginErrorPrompt, setUserLoginErrorPrompt] = useState("");
-    const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
-    const { reloadInventory } = useContext(InventoryContext);
+  const { setIsLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [login, setLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [prompt, setPrompt] = useState(false);
+  const [userAddedPrompt, setUserAddedPrompt] = useState("");
+  const [userLoginErrorPrompt, setUserLoginErrorPrompt] = useState("");
+  const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
+  const { reloadInventory } = useContext(InventoryContext);
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      setLoading(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
 
-      const data = new FormData(event.currentTarget);
+    const data = new FormData(event.currentTarget);
 
-      try {
-        if (login) {
-          const userData = await loginUser(
-            data.get("username"),
-            data.get("password")
-          );
+    try {
+      if (login) {
+        const userData = await loginUser(
+          data.get("username"),
+          data.get("password"),
+        );
 
-          if (userData.user) {
-            setIsLoggedIn(true);
-            reloadInventory();
-            navigate("/");
-          } else {
-            setUserLoginErrorPrompt(userData.message);
-            toast.error(userData.message);
-            setLoading(false);
-            setPrompt(true);
-          }
+        if (userData.user) {
+          setIsLoggedIn(true);
+          reloadInventory();
+          navigate("/");
         } else {
-          const userData = await createUser(
-            data.get("username"),
-            data.get("password")
-          );
-
-          if (userData.username) {
-            const loginData = await loginUser(
-              data.get("username"),
-              data.get("password")
-            );
-
-            if (loginData.user) {
-              toast.success("Signed up and logged in successfully!");
-              setIsLoggedIn(true);
-            } else {
-              setUserLoginErrorPrompt(loginData.message);
-              toast.error(loginData.message);
-            }
-          } else {
-            setUserAddedErrorPrompt(userData.message);
-            toast.error(userData.message);
-          }
+          setUserLoginErrorPrompt(userData.message);
+          toast.error(userData.message);
           setLoading(false);
           setPrompt(true);
         }
-      } catch (error) {
-        toast.error("An unexpected error occurred.");
+      } else {
+        const userData = await createUser(
+          data.get("username"),
+          data.get("password"),
+        );
+
+        if (userData.username) {
+          const loginData = await loginUser(
+            data.get("username"),
+            data.get("password"),
+          );
+
+          if (loginData.user) {
+            toast.success("Signed up and logged in successfully!");
+            setIsLoggedIn(true);
+          } else {
+            setUserLoginErrorPrompt(loginData.message);
+            toast.error(loginData.message);
+          }
+        } else {
+          setUserAddedErrorPrompt(userData.message);
+          toast.error(userData.message);
+        }
         setLoading(false);
         setPrompt(true);
       }
-    };
-  
+    } catch (error) {
+      toast.error("An unexpected error occurred.");
+      setLoading(false);
+      setPrompt(true);
+    }
+  };
 
   const goBack = async () => {
     setLoading(true);
@@ -150,9 +152,11 @@ export default function () {
               </div>
             ) : (
               <>
-                <p className="px-2 font-bold justify-center flex text-zinc-700">{login ? "Welcome Back" : "Get Started"}</p>
+                <p className="px-2 font-bold justify-center flex text-zinc-700">
+                  {login ? "Welcome Back" : "Get Started"}
+                </p>
                 <input
-                  className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-emerald-400"
+                  className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-cyan-800/70"
                   type="text"
                   id="username"
                   name="username"
@@ -161,7 +165,7 @@ export default function () {
                   autoFocus
                 />
                 <input
-                  className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-emerald-400"
+                  className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-cyan-800/70"
                   type={login ? "password" : "text"}
                   id="password"
                   name="password"
@@ -169,7 +173,7 @@ export default function () {
                   autoComplete="current-password"
                 />
                 <button
-                  className="bg-emerald-400/70 hover:bg-emerald-400 rounded-lg h-10 font-bold text-emerald-800"
+                  className="bg-cyan-700/70 hover:bg-cyan-700/90 rounded-lg h-10 font-bold text-white"
                   type="submit"
                   id="submit-button"
                 >

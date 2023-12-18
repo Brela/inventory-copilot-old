@@ -20,8 +20,9 @@ export const useAutomaticOrders = (
   tempInStock,
   createOrderItem,
   reloadOrders,
+  selectedItems, // only place order for selected items
   setOrderedDeliveryPopupContent,
-  setDisplayOrderedDeliveredPopup
+  setDisplayOrderedDeliveredPopup,
 ) => {
   useEffect(() => {
     if (!Array.isArray(inventory)) return;
@@ -32,9 +33,10 @@ export const useAutomaticOrders = (
       // console.log(tempInStock[item.id], item.reorderAt);
 
       if (
-        // when tempInStock hits the reorderAt or 80% of the reorderAt, trigger orders
-        (tempInStock[item.id] === item.reorderAt ||
-          tempInStock[item.id] === item.reorderAt * 0.8) &&
+        tempInStock[item.id] === item.reorderAt &&
+        // add this for also triggering orders at 80% of stock
+        // || tempInStock[item.id] === item.reorderAt * 0.8) &&
+        selectedItems.some((sel) => sel.id === item.id) &&
         isUsingStock &&
         item.reorderAt != 0
       ) {

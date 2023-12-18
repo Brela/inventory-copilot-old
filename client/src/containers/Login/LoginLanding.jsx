@@ -8,18 +8,12 @@ const LoginLanding = () => {
         <div className=" flex flex-col gap-4 rounded-3xl  ">
           <div className="flex flex-col gap-8 lg:gap-4 lg:flex-row justify-evenly items-center ">
             <div className="flex flex-col justify-center  w-full lg:w-2/3 bg-zinc-100 rounded-3xl p-4">
-              <span className=" font-bold text-7xl mb-4 bg-gradient-to-r from-teal-400 to-emerald-500 bg-clip-text text-transparent tracking-tighter">
-                Orderly.
+              <span className=" font-bold text-7xl mb-4 bg-gradient-to-r from-slate-700 to-cyan-700 bg-clip-text text-transparent tracking-tighter">
+                Inventory Copilot
               </span>
-              <h1 className="text-5xl font-bold tracking-tighter  mb-4">
-                Inventory Intelligence,{" "}
-                <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent tracking-tighter">
-                  Automated.
-                </span>
-              </h1>
-              <h1 className="text-3xl font-bold tracking-tighter   ">
-                Track, manage, and optimize{" "}
-                <span className="italic">effortlessly.</span>
+
+              <h1 className="text-2xl font-bold text-slate-600 tracking-tighter   ">
+                Inventory management and Automated Restock Orders
               </h1>
             </div>
             <div className="">

@@ -86,6 +86,7 @@ export default function Inventory() {
     tempInStock,
     createOrderItem,
     reloadOrders,
+    selectedItems,
     setOrderedDeliveryPopupContent,
     setDisplayOrderedDeliveredPopup,
   );
@@ -337,14 +338,8 @@ export default function Inventory() {
                 );
               })}
             </tbody>
-            <tfoot className="">
-              <tr className="">
-                <td className="" colSpan={columns.length + 1}>
-                  <DemoControls />
-                </td>
-              </tr>
-            </tfoot>
           </table>
+
           <PaginationWrapper>
             <div className="flex gap-4 justify-between p-2 mt-2">
               <div className="flex gap-4 items-center">

@@ -6,6 +6,7 @@ import OrderHistory from "../../containers/Orders/OrderHistory.jsx";
 import ActiveOrders from "../../containers/Orders/ActiveOrders.jsx";
 import Inventory from "../../containers/Inventory/Inventory.jsx";
 import PaginationWrapper from "./PaginationWrapper.jsx";
+import DemoControls from "../../containers/DemoControls.jsx";
 
 function InventoryPage() {
   const inventoryListScrollRef = useRef(null);
@@ -15,7 +16,7 @@ function InventoryPage() {
 
   return (
     <div className=" max-w-screen-2xl mx-auto ">
-      <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-3 md:gap-6 flex-col rounded-3xl">
+      <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-2 flex-col rounded-3xl">
         <Header />
         <section className="relative bg-zinc-50 rounded-2xl p-2 md:p-4 overflow-x-auto min-h-[85vh]">
           <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -28,10 +29,12 @@ function InventoryPage() {
             ordersListScrollRef={ordersListScrollRef}
             rowHeightState={rowHeightState}
           /> */}
-          <PaginationWrapper />
+
+          <PaginationWrapper activeTab={activeTab} />
         </section>
         {/* <Stats /> */}
-        <div className=" flex justify-center  mb-4">
+        <DemoControls />
+        <div className=" flex justify-center  my-4">
           <Footer />
         </div>
       </div>
