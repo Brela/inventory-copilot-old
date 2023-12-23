@@ -7,7 +7,7 @@ export const authenticateUser = async () => {
       `${API_URL}/authentication/authenticateUser`,
       {
         withCredentials: true,
-      }
+      },
     );
 
     const responseBody = response.data;
@@ -21,13 +21,11 @@ export const authenticateUser = async () => {
     }
 
     return responseBody;
-
   } catch (error) {
     console.error("Error during authentication:", error.message);
     throw error;
   }
 };
-
 
 export const getToken = async () => {
   try {
@@ -44,4 +42,3 @@ export const getToken = async () => {
     throw new Error(error.response?.data?.error || "UnknownError");
   }
 };
-

@@ -1,74 +1,85 @@
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import axios from "axios";
+import { toast } from "react-hot-toast";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const getUsers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/user/`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/user/`, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.error("Error fetching users:", error);
     throw error;
   }
-}
+};
 
 export const getUser = async (id) => {
   try {
-    const response = await axios.get(`${API_URL}/user/${id}`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/user/${id}`, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error(`Error fetching user with ID ${id}:`, error);
     throw error;
   }
-}
-
+};
 
 export const createUser = async (username, password) => {
   try {
-    const response = await axios.post(`${API_URL}/user/`, {
-      username,
-      password,
-    }, {
-      headers: {
-        "Content-Type": "application/json",
+    const response = await axios.post(
+      `${API_URL}/user/`,
+      {
+        username,
+        password,
       },
-      withCredentials: true,
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      },
+    );
 
     toast.success(`${username} successfully signed up`);
     return response.data;
   } catch (error) {
-    toast.error(`Failed to sign up: ${error.response?.data.message || error.message}`);
+    toast.error(
+      `Failed to sign up: ${error.response?.data.message || error.message}`,
+    );
     return null;
   }
-}
-  
+};
 
 export const loginUser = async (username, password) => {
   try {
-    const response = await axios.post(`${API_URL}/authentication/login`, {
-      username,
-      password,
-    }, {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await axios.post(
+      `${API_URL}/authentication/login`,
+      {
+        username,
+        password,
       },
-    });
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
 
-    toast.success('Welcome Back 👋');
+    toast.success("Welcome Back 👋");
 
     return response.data;
-
   } catch (error) {
     if (error.response) {
-      toast.error(`Error: ${error.response.data.message || 'Failed to login'}`);
+      toast.error(`Error: ${error.response.data.message || "Failed to login"}`);
     } else {
-      toast.error('An error occurred.');
+      toast.error("An error occurred.");
     }
     throw error;
   }
-}
+};
 
 export const logoutUser = async () => {
   try {
@@ -80,7 +91,7 @@ export const logoutUser = async () => {
           "Content-Type": "application/json",
         },
         withCredentials: true,
-      }
+      },
     );
 
     toast.success("Logged out successfully. See you soon! 👋");
@@ -89,7 +100,7 @@ export const logoutUser = async () => {
   } catch (error) {
     if (error.response) {
       toast.error(
-        `Error: ${error.response.data.message || "Failed to logout"}`
+        `Error: ${error.response.data.message || "Failed to logout"}`,
       );
     } else {
       toast.error("An error occurred while logging out.");
@@ -97,7 +108,6 @@ export const logoutUser = async () => {
     throw error;
   }
 };
-  
 
 export const updateUser = async (id, updates) => {
   try {
@@ -113,7 +123,7 @@ export const updateUser = async (id, updates) => {
     toast.error("An error occurred during the update process:", error);
     throw error;
   }
-}
+};
 
 export const deleteUser = async (id) => {
   try {
@@ -129,5 +139,4 @@ export const deleteUser = async (id) => {
     toast.error("An error occurred during the delete process:", error);
     throw error;
   }
-}
-
+};

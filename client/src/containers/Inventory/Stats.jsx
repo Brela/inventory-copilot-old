@@ -30,16 +30,17 @@ function Stats() {
     activeOrdersSpark: [],
   });
 
-  const itemsWithDifference = Array.isArray(inventory) ? inventory.map((item) => ({
-    ...item,
-    difference: item.inStock - item.reorderAt,
-  })) : [];
-  
+  const itemsWithDifference = Array.isArray(inventory)
+    ? inventory.map((item) => ({
+        ...item,
+        difference: item.inStock - item.reorderAt,
+      }))
+    : [];
 
   itemsWithDifference.sort((a, b) => a.difference - b.difference);
 
   const itemsCloseToReorder = itemsWithDifference.filter(
-    (item) => item.difference >= 0
+    (item) => item.difference >= 0,
   );
 
   const top5Items = itemsCloseToReorder.slice(0, 5);

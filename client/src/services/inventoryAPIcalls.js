@@ -148,13 +148,13 @@ export const updateInventoryItem = async (id, updates) => {
           "Content-Type": "application/json",
         },
         withCredentials: true,
-      }
+      },
     );
     return response.data;
   } catch (error) {
     console.error(
       "An error occurred while updating the inventory item:",
-      error
+      error,
     );
     throw error;
   }

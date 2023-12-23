@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import Header from "../../containers/Header/Header.jsx";
 import Footer from "../../containers/Footer/Footer.jsx";
 import NavigationBar from "../../components/NavigationBar.jsx";
+import Dashboard from "../../containers/Dashboard";
 import OrderHistory from "../../containers/Orders/OrderHistory.jsx";
 import ActiveOrders from "../../containers/Orders/ActiveOrders.jsx";
 import Inventory from "../../containers/Inventory/Inventory.jsx";
@@ -20,7 +21,7 @@ function InventoryPage() {
         <Header />
         <section className="relative bg-zinc-50 rounded-2xl p-2 md:p-4 overflow-x-auto min-h-[85vh]">
           <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
-          {activeTab === "dashboard" && <div>dashboard</div>}
+          {activeTab === "dashboard" && <Dashboard />}
           {activeTab === "inventory" && <Inventory />}
           {activeTab === "Active Orders" && <ActiveOrders />}
           {activeTab === "Order History" && <OrderHistory />}

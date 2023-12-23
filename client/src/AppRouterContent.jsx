@@ -5,6 +5,7 @@ import { AuthContext } from "./contexts/auth.context";
 import Home from "./pages/Home/Home.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import OrderedDeliveredPopup from "./containers/Inventory/modals/OrderedDeliveredPopup.jsx";
+import DashboardEditor from "./containers/Dashboard/DashboardEditor";
 import { Toaster } from "react-hot-toast";
 
 export default function AppRouterContent() {
@@ -21,6 +22,8 @@ export default function AppRouterContent() {
         <>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/dashboard-editor" element={<DashboardEditor />} />
+
             <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
           {location.pathname === "/orders" ||

@@ -22,7 +22,7 @@ export async function getOrderItem(id) {
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch order with ID ${id}. Status: ${response.status}`
+      `Failed to fetch order with ID ${id}. Status: ${response.status}`,
     );
   }
 
@@ -30,11 +30,10 @@ export async function getOrderItem(id) {
   return data;
 }
 
-
 // totalIncomingQty, incomingDates,
 export async function createOrderItem(order) {
   const response = await fetch(`${API_URL}/orders/`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       sku: order.sku,
       orderQty: order.orderQty,
@@ -42,7 +41,7 @@ export async function createOrderItem(order) {
       totalCost: order.totalCost,
     }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   return response.json();
@@ -51,13 +50,13 @@ export async function createOrderItem(order) {
 export async function updateOrderItem(id, updates) {
   const { schedArrivalDate, orderStatus } = updates;
   const response = await fetch(`${API_URL}/orders/${id}`, {
-    method: 'PATCH',
+    method: "PATCH",
     body: JSON.stringify({
       schedArrivalDate,
       orderStatus,
     }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   return response.json();
@@ -65,9 +64,9 @@ export async function updateOrderItem(id, updates) {
 
 export async function deleteOrderItem(id) {
   const response = await fetch(`${API_URL}/orders/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   return response.json();
@@ -77,13 +76,13 @@ export const clearAllOrderHistory = async () => {
   try {
     const response = await axios.delete(`${API_URL}/orders/clearhistory`, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       withCredentials: true,
     });
     return response.data;
   } catch (error) {
-    console.error('Error clearing order history:', error);
+    console.error("Error clearing order history:", error);
     throw error;
   }
 };
